@@ -204,7 +204,6 @@ fn init(vm: *mut JavaVM, options: *mut c_char) {
         jdwp_server.vm = Some(Arc::clone(&vm));
 
         rt.lock().unwrap().spawn(async move {
-            // (*(*vm)).AttachCurrentThread.unwrap()(vm, env2, null() as *mut c_void);
             for request in server.lock().unwrap().incoming_requests() {
                 match request.url() {
                     "/VirtualMachine/Version" => handle_version_command(request),
